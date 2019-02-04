@@ -351,7 +351,7 @@ inline size_t thread_id() SPDLOG_NOEXCEPT
 inline void sleep_for_millis(int milliseconds) SPDLOG_NOEXCEPT
 {
 #if defined(_WIN32)
-    ::Sleep(milliseconds);
+    ::Sleep(static_cast<DWORD>(milliseconds));
 #else
     std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 #endif

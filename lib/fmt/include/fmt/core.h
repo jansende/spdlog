@@ -228,7 +228,7 @@ template <typename Char>
 FMT_CONSTEXPR size_t length(const Char *s) {
   const Char *start = s;
   while (*s) ++s;
-  return s - start;
+  return static_cast<size_t>(s - start);
 }
 #if FMT_GCC_VERSION
 FMT_CONSTEXPR size_t length(const char *s) { return std::strlen(s); }
