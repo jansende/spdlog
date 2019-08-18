@@ -131,7 +131,7 @@ inline void prevent_child_fd(FILE *f)
 
 #ifdef _WIN32
 #if !defined(__cplusplus_winrt)
-    auto file_handle = (HANDLE)_get_osfhandle(_fileno(f));
+    auto file_handle = reinterpret_cast<HANDLE>(_get_osfhandle(_fileno(f)));
     if (!::SetHandleInformation(file_handle, HANDLE_FLAG_INHERIT, 0))
         throw spdlog_ex("SetHandleInformation failed", errno);
 #endif
@@ -210,7 +210,7 @@ inline size_t filesize(FILE *f)
 #if defined(_WIN32) && !defined(__CYGWIN__)
     int fd = _fileno(f);
 #if _WIN64 // 64 bits
-    __int64 ret = _filelengthi64(fd);
+    long long ret = _filelengthi64(fd);
     if (ret >= 0)
     {
         return static_cast<size_t>(ret);
