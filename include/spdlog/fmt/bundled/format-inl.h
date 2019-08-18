@@ -137,12 +137,15 @@ int safe_strerror(
     }
 
 #if !FMT_MSC_VER
+#pragma GCC diagnostic push     //we are warned that strerror is deprecated, but it's only used as a fallback
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     // Fallback to strerror if strerror_r and strerror_s are not available.
     int fallback(internal::null<>) {
       errno = 0;
       buffer_ = strerror(error_code_);
       return errno;
     }
+#pragma GCC diagnostic pop
 #endif
 
    public:
