@@ -156,6 +156,63 @@ if(SPDLOG_WCHAR_SUPPORT)
     endif()
 endif()
 
+#---------------------------------------------------------------------------------------
+# Compiler options
+#---------------------------------------------------------------------------------------
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    #we want as many warnings as possible
+    target_compile_options(spdlog PUBLIC -Weverything)
+    #disable annoying warnings
+    target_compile_options(spdlog PUBLIC -Wno-c++98-compat
+                                         -Wno-c++98-compat-pedantic
+                                         -Wno-c++2a-compat
+                                         -Wno-newline-eof
+                                         -Wno-shadow-field
+                                         -Wno-shadow-field-in-constructor
+                                         -Wno-shadow-uncaptured-local
+                                         -Wno-covered-switch-default
+                                         -Wno-extra-semi
+                                         -Wno-extra-semi-stmt
+                                         -Wno-documentation-unknown-command
+                                         -Wno-signed-enum-bitfield
+                                         -Wno-exit-time-destructors
+                                         -Wno-undefined-func-template
+                                         -Wno-deprecated
+                                         -Wno-nonportable-system-include-path
+                                         -Wno-language-extension-token
+                                         -Wno-global-constructors
+    )
+    #we want as many warnings as possible
+    target_compile_options(spdlog_header_only INTERFACE -Weverything)
+    #disable annoying warnings
+    target_compile_options(spdlog_header_only INTERFACE -Wno-c++98-compat
+                                                        -Wno-c++98-compat-pedantic
+                                                        -Wno-c++2a-compat
+                                                        -Wno-newline-eof
+                                                        -Wno-shadow-field
+                                                        -Wno-shadow-field-in-constructor
+                                                        -Wno-shadow-uncaptured-local
+                                                        -Wno-covered-switch-default
+                                                        -Wno-extra-semi
+                                                        -Wno-extra-semi-stmt
+                                                        -Wno-documentation-unknown-command
+                                                        -Wno-signed-enum-bitfield
+                                                        -Wno-exit-time-destructors
+                                                        -Wno-undefined-func-template
+                                                        -Wno-deprecated
+                                                        -Wno-nonportable-system-include-path
+                                                        -Wno-language-extension-token
+                                                        -Wno-global-constructors
+    )
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    #warnings
+    target_compile_options(spdlog PUBLIC -Wall -Wextra -Wpedantic)
+    target_compile_options(spdlog_header_only INTERFACE -Wall -Wextra -Wpedantic)
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    #warnings
+    target_compile_options(spdlog PUBLIC /W4)
+    target_compile_options(spdlog_header_only INTERFACE /W4)
+endif()
 
 #---------------------------------------------------------------------------------------
 # Build binaries

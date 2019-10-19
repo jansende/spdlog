@@ -88,5 +88,5 @@ SPDLOG_INLINE std::shared_ptr<spdlog::logger> spdlog::async_logger::clone(std::s
 {
     auto cloned = std::make_shared<spdlog::async_logger>(*this);
     cloned->name_ = std::move(new_name);
-    return cloned;
+    return std::move(cloned);
 }
